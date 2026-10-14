@@ -9,9 +9,10 @@ This repository showcases real-world machine learning practices: exploratory dat
 ## 📁 Repository Structure
 
 ```text
-Linear_Regresion/         
+Linear_Regresion/
+├── House_price_rediction.ipynb          # Multiple Linear Regression & OLS Analysis
 ├── student_marks_prediction.ipynb       # Simple Linear Regression & Inference
-├── house_price_regression_dataset.csv   # Multiple Linear Regression & OLS Analysis
+├── house_price_regression_dataset.csv   # Dataset for House Price Prediction (1000 rows)
 ├── StudentMarksDataset.csv              # Dataset for Student Marks Prediction (100 rows)
 ├── requirements.txt                     # Project dependencies
 └── README.md                            # Project documentation
