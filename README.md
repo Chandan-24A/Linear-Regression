@@ -112,7 +112,7 @@ To resolve the variance explosion and multicollinearity of polynomial features, 
 | :--- | :--- | :--- | :---: | :---: | :---: |
 | **Ridge Regression** | L2 ($\sum w_j^2$) | $\alpha = 1.5264$ | **`0.9076`** | **`2.2908`** | 44 / 44 (Smooth shrinkage) |
 | **Lasso Regression** | L1 ($\sum \|w_j\|$) | $\alpha = 0.0173$ | **`0.9013`** | **`2.3671`** | **16 / 44 (Feature Selection)** |
-| **ElasticNet Regression** | L1 + L2 Blend | $\alpha = 0.0158$,$\text{l1\_ratio} = 0.95$ | **`0.9017`** | **`2.3626`** | 16 / 44 (Sparse grouping) |
+| **ElasticNet Regression** | L1 + L2 Blend | $\alpha = 0.0158$, L1\_ratio = 0.95 | **`0.9017`** | **`2.3626`** | 16 / 44 (Sparse grouping) |
 
 ### 5. Key Insights
 - **Ridge (L2)** delivered the **highest predictive accuracy** ($R^2 = 90.76\%$) by shrinking correlated polynomial weights.
