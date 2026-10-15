@@ -1,40 +1,43 @@
 # 📈 Machine Learning: Linear Regression Projects
 
-A comprehensive machine learning repository demonstrating the end-to-end implementation of **Simple Linear Regression (SLR)** and **Multiple Linear Regression (MLR)** using `scikit-learn` and `statsmodels`.
+A comprehensive machine learning repository demonstrating the end-to-end implementation of **Simple Linear Regression (SLR)**, **Multiple Linear Regression (MLR)**, and **Polynomial & Regularized Regression (Ridge, Lasso, ElasticNet)** using `scikit-learn` and `statsmodels`.
 
-This repository showcases real-world machine learning practices: exploratory data analysis (EDA), statistical significance testing (p-values & t-statistics), feature selection, data leakage prevention during scaling, model evaluation, and inference.
+This Project showcases real-world machine learning practices: exploratory data analysis (EDA), statistical significance testing (p-values & t-statistics), polynomial feature engineering, handling bias-variance tradeoff, L1/L2 regularization, automated hyperparameter tuning via Cross-Validation, and model inference.
 
 ---
 
-## 📁 Repository Structure
+## 📁 Project Structure
 
 ```text
 Linear_Regresion/
-├── House_price_rediction.ipynb          # Multiple Linear Regression & OLS Analysis
+├── Car_fuel_efficiency_predictor.ipynb  # Polynomial, Ridge, Lasso & ElasticNet Regression
+├── House_price_prediction.ipynb         # Multiple Linear Regression & OLS Hypothesis Testing
 ├── student_marks_prediction.ipynb       # Simple Linear Regression & Inference
-├── house_price_regression_dataset.csv   # Dataset for House Price Prediction (1000 rows)
+├── auto-mpg.csv                         # Auto MPG Dataset (398 rows)
+├── house_price_regression_dataset.csv   # Dataset for House Price Prediction (1,000 rows)
 ├── StudentMarksDataset.csv              # Dataset for Student Marks Prediction (100 rows)
 ├── requirements.txt                     # Project dependencies
-└── README.md                            # Project documentation
+└── README.md                            # Comprehensive project documentation
 ```
 
 ---
 
 ## 📊 Projects Overview & Comparison
 
-| Metric / Aspect | 🎓 Student Marks Prediction | 🏡 House Price Prediction |
-| :--- | :--- | :--- |
-| **Model Type** | Simple Linear Regression (1D) | Multiple Linear Regression (Multi-D) |
-| **Notebook** | `student_marks_prediction.ipynb` | `House_price_rediction.ipynb` |
-| **Dataset** | `StudentMarksDataset.csv` (100 samples) | `house_price_regression_dataset.csv` (1,000 samples) |
-| **Target Variable ($y$)** | `Std_Marks` (Exam Marks) | `House_Price` (USD $) |
-| **Predictor Count ($X$)** | 1 Feature | 6 Features (Selected via OLS) |
-| **Train / Test Split** | 75% Train / 25% Test (`random_state=45`) | 75% Train / 25% Test (`random_state=42`) |
-| **Preprocessing** | Mean Imputation + `StandardScaler` | Feature Selection + `StandardScaler` |
-| **$R^2$ Score** | **`0.9523` (95.2%)** | **`0.9984` (99.8%)** |
-| **Adjusted $R^2$** | **`0.9513`** | **`0.9983`** |
-| **Mean Absolute Error (MAE)**| **`0.9052`** marks | **`$8,152.90`** |
-| **Root Mean Squared Error (RMSE)**| **`1.0998`** marks | **`$10,183.28`** (~1% error) |
+| Metric / Aspect | 🎓 Student Marks Prediction | 🏡 House Price Prediction | 🚗 Car Fuel Efficiency Prediction |
+| :--- | :--- | :--- | :--- |
+| **Model Type** | Simple Linear Regression (1D) | Multiple Linear Regression (Multi-D) | Polynomial & Regularized Regression |
+| **Notebook** | `student_marks_prediction.ipynb` | `House_price_prediction.ipynb` | `Car_fuel_efficiency_predictor.ipynb` |
+| **Dataset** | `StudentMarksDataset.csv` (100 rows) | `house_price_regression_dataset.csv` (1,000 rows) | `auto-mpg.csv` (398 rows) |
+| **Target Variable ($y$)** | `Std_Marks` (Exam Marks) | `House_Price` (USD $) | `mpg` (Miles Per Gallon) |
+| **Predictor Count ($X$)** | 1 Feature | 6 Features (Selected via OLS) | 8 Features $\rightarrow$ 44 (Poly Deg-2) |
+| **Train / Test Split** | 75% Train / 25% Test (`random_state=45`) | 75% Train / 25% Test (`random_state=42`) | 75% Train / 25% Test (`random_state=42`) |
+| **Preprocessing** | Mean Imputation + `StandardScaler` | OLS Selection + `StandardScaler` | One-Hot Encoding + Mean Imp + `StandardScaler` |
+| **Best Model Algorithm**| Ordinary Least Squares (OLS) | Multiple Linear Regression (OLS) | **Ridge Regression (Degree 2, $\alpha \approx 1.53$)** |
+| **$R^2$ Score** | **`0.9523` (95.2%)** | **`0.9984` (99.8%)** | **`0.9076` (90.8%)** |
+| **Adjusted $R^2$** | **`0.9513`** | **`0.9983`** | **`0.8998`** |
+| **Mean Absolute Error (MAE)**| **`0.9052`** marks | **`$8,152.90`** | **`1.7027`** mpg |
+| **Root Mean Squared Error (RMSE)**| **`1.0998`** marks | **`$10,183.28`** (~1% error) | **`2.2908`** mpg |
 
 ---
 
@@ -87,16 +90,51 @@ During Exploratory Data Analysis, Pearson correlation indicated near-zero univar
 
 ---
 
-## 🔬 Key Engineering & Statistical Concepts Demonstrated
+## 🚗 Project 3: Car Fuel Efficiency Prediction (Polynomial & Regularization)
+
+### 1. Problem Statement
+Predict vehicle fuel efficiency (`mpg` — Miles Per Gallon) from engine, weight, and geographical origin attributes using **Polynomial Feature Engineering** and **Regularized Linear Models**.
+
+### 2. End-to-End Workflow & Preprocessing
+- **Data Cleaning**: Converted `horsepower` from object to numeric, handling missing values with average imputation.
+- **Categorical Feature Encoding**: The `origin` feature (1: USA, 2: Europe, 3: Asia) was mapped and **One-Hot Encoded** using `pd.get_dummies(..., drop_first=True)` to eliminate false numerical hierarchy assumptions.
+- **Pipeline Architecture**: Structured transformations using Scikit-Learn `Pipeline` (`PolynomialFeatures` $\rightarrow$ `StandardScaler` $\rightarrow$ Estimator) to eliminate data leakage.
+
+### 3. Polynomial Degree Progression & Bias-Variance Diagnosis
+- **Degree 1 (Linear Regression, 8 features)**: $R^2 = 0.8430$, $\text{RMSE} = 2.986$. Misses non-linear curvature between vehicle weight and fuel efficiency.
+- **Degree 2 (Polynomial OLS, 44 features)**: $R^2 = 0.8983$, $\text{RMSE} = 2.403$. Captures interaction and quadratic effects.
+- **Degree 3 (Polynomial OLS, 164 features)**: $R^2 = -0.0406$, $\text{RMSE} = 7.687$. **Catastrophic Overfitting** due to extreme parameter explosion relative to sample size ($N=298$).
+
+### 4. Regularization & Cross-Validation Benchmarking
+To resolve the variance explosion and multicollinearity of polynomial features, regularized models were trained at **Degree 2** with 5-Fold Cross-Validation:
+
+| Model | Regularization Penalty | Optimal Hyperparameters | Test $R^2$ | Test RMSE | Active Features |
+| :--- | :--- | :--- | :---: | :---: | :---: |
+| **Ridge Regression** | L2 ($\sum w_j^2$) | $\alpha = 1.5264$ | **`0.9076`** | **`2.2908`** | 44 / 44 (Smooth shrinkage) |
+| **Lasso Regression** | L1 ($\sum \|w_j\|$) | $\alpha = 0.0173$ | **`0.9013`** | **`2.3671`** | **16 / 44 (Feature Selection)** |
+| **ElasticNet Regression** | L1 + L2 Blend | $\alpha = 0.0158$, $\text{l1\_ratio} = 0.95$ | **`0.9017`** | **`2.3626`** | 16 / 44 (Sparse grouping) |
+
+### 5. Key Insights
+- **Ridge (L2)** delivered the **highest predictive accuracy** ($R^2 = 90.76\%$) by shrinking correlated polynomial weights.
+- **Lasso (L1)** successfully performed **automated feature elimination**, driving 28 redundant polynomial interactions to strictly zero while preserving 90% accuracy with only 16 active terms.
+- **ElasticNet** verified that sparse feature selection (L1 penalty) dominates this dataset (`l1_ratio = 0.95`).
+
+---
+
+## 🔬 Key Statistical Concepts Demonstrated
 
 1. **Univariate vs. Multivariate Significance**:
    - Demonstrated why low Pearson correlation does not imply a feature is useless. Multivariate regression isolates individual feature contributions while holding others constant.
 2. **Preventing Data Leakage**:
-   - Scalers are fitted **only** on training partitions (`scaler.fit_transform(X_train)`), and applied downstream to test partitions (`scaler.transform(X_test)`).
-3. **$R^2$ vs. Adjusted $R^2$**:
-   - Tracked Adjusted $R^2$ across both projects to penalize redundant parameters and avoid artificial inflation of model fit.
-4. **OLS Regression Diagnostics**:
-   - Utilized `statsmodels.api.OLS` for p-values, standard errors, condition numbers, and AIC comparison.
+   - Scalers and encoders are fitted **strictly** on training partitions (`fit_transform(X_train)`) and applied to test partitions (`transform(X_test)`), embedded within Scikit-Learn `Pipeline` objects.
+3. **The Bias-Variance Tradeoff in Polynomial Spaces**:
+   - Observed the progression from high bias (Degree 1 linear model) to optimal balance (Degree 2 + Ridge) to extreme high variance (Degree 3 OLS).
+4. **L1 vs. L2 Regularization Mechanics**:
+   - Analyzed how Ridge stabilizes collinear feature spaces via smooth coefficient shrinkage, while Lasso produces sparse, interpretable models by zeroing out non-essential interaction terms.
+5. **Hyperparameter Tuning via Cross-Validation**:
+   - Implemented `RidgeCV`, `LassoCV`, and `ElasticNetCV` with 5-fold cross-validation to prevent test-set overfitting during parameter searches.
+6. **OLS Regression Diagnostics**:
+   - Utilized `statsmodels.api.OLS` for p-values, t-statistics, condition numbers, and AIC comparison.
 
 ---
 
@@ -104,5 +142,5 @@ During Exploratory Data Analysis, Pearson correlation indicated near-zero univar
 - **Language**: Python 3
 - **Data Manipulation**: `pandas`, `numpy`
 - **Visualization**: `matplotlib`, `seaborn`
-- **Machine Learning**: `scikit-learn`
+- **Machine Learning**: `scikit-learn` (`LinearRegression`, `RidgeCV`, `LassoCV`, `ElasticNetCV`, `PolynomialFeatures`, `Pipeline`, `StandardScaler`)
 - **Statistical Modeling**: `statsmodels`
